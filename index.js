@@ -95,3 +95,17 @@ app.post("/api/chat", async (req, res) => {
         if (data === "[DONE]") {
           continue;
         }
+
+        try {
+          const json = JSON.parse(data);
+
+          const content = json.choices?.[0]?.delta?.content;
+
+          if (content) {
+            res.write(`data: ${JSON.stringify(content)}\n\n`);
+          }
+        } catch (error) {
+          console.error("Gagal parsing streaming data:", error);
+        }
+      }
+    }
