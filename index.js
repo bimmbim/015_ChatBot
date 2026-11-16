@@ -1,7 +1,7 @@
-const express = require("express");
-const dotenv = require("dotenv");
+const express = require("express")
+const dotenv = require("dotenv")
 
-dotenv.config();
+dotenv.config()
 
 const app = express();
 const PORT = 3000;
@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/api/chat", async (req, res) => {
-    try {
+    try{
         const messages = req.body.messages;
 
         if (!messages || !Array.isArray(messages)) {
@@ -36,14 +36,14 @@ app.post("/api/chat", async (req, res) => {
                 body: JSON.stringify({
                     model: "inclusionai/ling-3.2-flash:free",
                     messages: messages,
-                    temperature: 0.7,
+                    tempertaure: 0.7,
                     max_tokens: 1000,
                     stream: true
                 })
             }
         );
 
-        if (!response.ok) {
+        if(!response.ok) {
             const errorData = await response.text();
 
             console.error("OpenRouter Error:", errorData);
@@ -53,7 +53,7 @@ app.post("/api/chat", async (req, res) => {
             });
         }
 
-        // Header untuk streaming
+        //Header untuk streaming
         res.setHeader("Content-Type", "text/event-stream");
         res.setHeader("Cache-Control", "no-cache");
         res.setHeader("Connection", "keep-alive");
@@ -78,3 +78,13 @@ app.post("/api/chat", async (req, res) => {
 
             // Simpan bagian terakhir karena mungkin belum lengkap
             buffer = lines.pop();
+
+            for (const line of lines) {
+
+                const trimmedLine = line.trim();
+
+                
+            }
+        }
+    }
+})
